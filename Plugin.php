@@ -62,8 +62,9 @@ class bilibili_Plugin implements Typecho_Plugin_Interface
 
         if ($widget instanceof Widget_Archive){
             $text = preg_replace(
-                    "/(\[bilibili\]av(.*?)\[\/bilibili\])/is",
-                    '<embed height="416" width="544" quality="high" allowfullscreen="true" type="application/x-shockwave-flash" src="//static.hdslb.com/miniloader.swf" flashvars="aid=$2&page=1" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"></embed>',
+                    "/(\[bilibili\]aid(.*?)cid(.*?)\[\/bilibili\])/is",
+                    //'<embed height="416" width="544" quality="high" allowfullscreen="true" type="application/x-shockwave-flash" src="//static.hdslb.com/miniloader.swf" flashvars="aid=$2&page=1" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"></embed>',
+                    '<iframe src="//player.bilibili.com/player.html?aid=$2&cid=$3&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>',
                     $text
                     );
         }
