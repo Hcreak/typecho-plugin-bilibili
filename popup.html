@@ -1,0 +1,74 @@
+<script type="text/javascript">
+	$(function(){
+		if($('#wmd-button-row').length>0)
+			$('#wmd-button-row').append('<li class="wmd-button" id="wmd-bilibili-button" style="font-size:14px;float:left;color:#AAA;width:48px;line-height:20px;" title="Embed bilibili">B<sml style="font-size:12px;">ilibili</sml></li>');
+		else
+	 		$('#text').before('<a href="#" id="wmd-bilibili-button" title="Embed Youtebe">bilibili</a>');
+
+	 	$(document).on('click', '#wmd-bilibili-button', function(){
+	 		var bgwidth = (document.body.className == 'fullscreen') ? '200%' : '100%';
+	 		$(this).after(
+	 			// '<div class="wmd-prompt-dialog"><div><p><b>Embed your bilibili</b></p><p>bilibili url like: </div><form><input type="text" name="bilibili_url"><br>Width: <input name="width" value="560" size="1"/>&nbsp;&nbsp;Height: <input name="height" value="315" size="1"/><br><br><button type="button" class="btn-s primary" onclick="embedbilibili(this);">Submit</button><button type="button" class="btn-s" onclick="rm2();">Cancel</button></form></div>');
+	
+	 			'<div class="wmd-prompt-dialog"><div><p><b>Embed your bilibili</b></p><p>bilibili url like: </div><form><input type="text" name="bilibili_url"><br><br><button type="button" class="btn-s primary" onclick="embedbilibili(this);">Submit</button><button type="button" class="btn-s" onclick="rm2();">Cancel</button></form></div>');
+
+	 	})
+
+	 	// Remove popup
+	 	if(($('.wmd-prompt-dialog').length != 0) && e.keyCode == '27') {
+			rm2();
+		}
+	})
+
+	function embedbilibili(e){
+		$form = $(e).closest('form');
+		url = $.trim($form.find('input[name="bilibili_url"]').val());
+		// width = $form.find('[name=width]').val() || 640;
+		// height = $form.find('[name=height]').val() || 480;
+		// url = getembedvideo(url);
+		if(url == ''){
+			alert('bilibili or Vimeo url, please');
+		}else{
+		        if(url == 'error') {
+				alert('Cannot recognize bilibili or Vimeo url. :(');
+			}else{
+				// setHTML(url,width,height);
+				setHTML(url);
+				rm2();
+			}
+		}
+	}
+
+	// function setHTML(r,w,h){
+	// 	var html = '<iframe width="'+w+'" height="'+h+'" src="'+r+'" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen class="bilibili"></iframe>';
+	// 	var t = $('#text');
+	// 	t.val(t.val()+html);
+	// 	rm2();
+	// }
+
+	function setHTML(html){		
+		var t = $('#text');
+		t.val(t.val()+html);
+		rm2();
+	}
+
+	function rm2() {
+		$('.wmd-prompt-dialog').remove()
+	}
+	// function getembedvideo(url){
+    //             rest = getembedbilibili(url);
+    //             if (rest == 'error') {rest = getembedvimeo(url);}
+    //             return rest;
+    //     }
+	// function getembedvimeo(url) {
+    // 		var regExp = /^.*(vimeo.com\/)([^\/]*).*/;
+    // 		var match = url.match(regExp);
+    // 		if (match && match[2].length == 9) { return '//player.vimeo.com/video/'+match[2]; } else { return 'error'; }
+	// }
+	// function getembedbilibili(url) {
+    // 		var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    // 		var match = url.match(regExp);
+    // 		if (match && match[2].length == 11) { return '//www.bilibili.com/embed/'+match[2]; } else { return 'error'; }
+	// }
+
+</script>

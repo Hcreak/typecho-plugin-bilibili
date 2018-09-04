@@ -19,8 +19,16 @@ class bilibili_Plugin implements Typecho_Plugin_Interface
      */
     public static function activate()
     {
-        Typecho_Plugin::factory('Widget_Abstract_Contents')->contentEx = array('bilibili_Plugin', 'parse');
+        // Typecho_Plugin::factory('Widget_Abstract_Contents')->contentEx = array('bilibili_Plugin', 'parse');
+        
+		Typecho_Plugin::factory('admin/write-post.php')->bottom = array('bilibili_Plugin', 'Insert');
+		Typecho_Plugin::factory('admin/write-page.php')->bottom = array('bilibili_Plugin', 'Insert');
     }
+
+    public static function Insert(){
+		$options = Helper::options();
+        include dirname(__FILE__).'/popup.html';
+	}
 
     /**
      * 禁用插件方法,如果禁用失败,直接抛出异常
@@ -50,25 +58,25 @@ class bilibili_Plugin implements Typecho_Plugin_Interface
      */
     public static function personalConfig(Typecho_Widget_Helper_Form $form){}
 
-    /**
-     * 解析bilibili标签
-     *
-     * @access public
-     * @return void
-     */
-    public static function parse($text, $widget, $lastResult) {
+    // /**
+    //  * 解析bilibili标签
+    //  *
+    //  * @access public
+    //  * @return void
+    //  */
+    // public static function parse($text, $widget, $lastResult) {
 
-        $text = empty($lastResult) ? $text : $lastResult;
+    //     $text = empty($lastResult) ? $text : $lastResult;
 
-        if ($widget instanceof Widget_Archive){
-            $text = preg_replace(
-                    "/(\[bilibili\]aid(.*?)cid(.*?)\[\/bilibili\])/is",
-                    //'<embed height="416" width="544" quality="high" allowfullscreen="true" type="application/x-shockwave-flash" src="//static.hdslb.com/miniloader.swf" flashvars="aid=$2&page=1" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"></embed>',
-                    '<iframe src="//player.bilibili.com/player.html?aid=$2&cid=$3&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>',
-                    $text
-                    );
-        }
+    //     if ($widget instanceof Widget_Archive){
+    //         $text = preg_replace(
+    //                 "/(\[bilibili\]aid(.*?)cid(.*?)\[\/bilibili\])/is",
+    //                 //'<embed height="416" width="544" quality="high" allowfullscreen="true" type="application/x-shockwave-flash" src="//static.hdslb.com/miniloader.swf" flashvars="aid=$2&page=1" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"></embed>',
+    //                 '<iframe src="//player.bilibili.com/player.html?aid=$2&cid=$3&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>',
+    //                 $text
+    //                 );
+    //     }
 
-        return $text;
-    }
+    //     return $text;
+    // }
 }
